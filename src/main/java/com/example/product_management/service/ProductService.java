@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.example.product_management.dto.ProductRequestDTO;
 import com.example.product_management.entity.Product;
 import com.example.product_management.repository.ProductRepository;
 
@@ -18,10 +19,13 @@ public class ProductService {
         return productRepository.findAll();
     }
 
-    public Product saveProduct(Product product) {
-        return productRepository.save(product);
+    public Product saveProduct(ProductRequestDTO dto) {
+    Product product = new Product();
+    product.setName(dto.getName());
+    product.setPrice(dto.getPrice());
+    
+    return productRepository.save(product);
     }
-
     public Product getProductById(Long id) {
         return productRepository.findById(id).orElse(null);
     }
@@ -29,4 +33,15 @@ public class ProductService {
     public void deleteProduct(Long id) {
         productRepository.deleteById(id);
     }
+
+    public Product updateProduct(Long id, ProductRequestDTO dto) {
+    return productRepository.findById(id) // check if it exists
+        .map(product -> {
+            product.setName(dto.getName());
+            product.setPrice(dto.getPrice()); 
+            return productRepository.save(product); 
+        }).orElseThrow(() -> new RuntimeException("Ürün bulunamadı!"));
+    }
+
+
 }

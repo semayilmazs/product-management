@@ -9,7 +9,7 @@ import jakarta.persistence.Id;
 public class Product {
 
     @Id //Primary Key
-    @GeneratedValue(strategy = GenerationType.IDENTITY) // ID'nin otomatik artmasını sağlar
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String name;
