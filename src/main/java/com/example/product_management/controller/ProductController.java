@@ -15,6 +15,8 @@ import com.example.product_management.dto.ProductRequestDTO;
 import com.example.product_management.entity.Product;
 import com.example.product_management.service.ProductService;
 
+import jakarta.validation.Valid;
+
 
 @RestController // tells us this is an api  
 @RequestMapping("/api/products") // defines the address
@@ -31,11 +33,11 @@ public class ProductController {
         return productService.getAllProducts();
     }
     @PostMapping 
-    public Product create(@RequestBody ProductRequestDTO dto) {
+    public Product create(@Valid @RequestBody ProductRequestDTO dto) {
     return productService.saveProduct(dto);
     }
     @PutMapping("/{id}")
-    public Product update(@PathVariable Long id, @RequestBody ProductRequestDTO dto) {
+    public Product update(@PathVariable Long id, @Valid @RequestBody ProductRequestDTO dto) {
         return productService.updateProduct(id, dto);
     }
     @DeleteMapping("/{id}")
